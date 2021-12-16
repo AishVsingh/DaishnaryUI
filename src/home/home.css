@@ -1,0 +1,65 @@
+#home {
+  color: white;
+  font-family: "EB Garamond", serif;
+}
+
+#header {
+  font-size: 3vw;
+  margin: 1%;
+  user-select: none;
+}
+
+#form-container {
+  border: solid 2px white;
+  padding: 5%;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  align-content: center;
+}
+
+#word-input {
+  display: block;
+  width: 60%;
+  outline: none;
+  padding: 1%;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1vw;
+  border: none;
+  margin-bottom: 5%;
+}
+
+.action-button {
+  display: block;
+  background-color: white;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  padding: 1%;
+  font-size: 1vw;
+  border-radius: 10px;
+  font-family: "EB Garamond", serif;
+  border: white solid 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+.action-button:hover {
+  background-color: black;
+  color: white;
+  border: white solid 2px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.button-panel {
+  display: flex;
+  justify-content: space-around;
+}
+
+#status-container {
+  margin-top: 5%;
+}
