@@ -47,7 +47,22 @@ class Form extends React.Component {
         this.statusElement.current.changeContent(data_w);
       });
   };
-  AddWord = () => {};
+  AddWord = () => {
+    if (this.state.input.trim() == "") {
+      return;
+    }
+    axios
+      .post(
+        `http://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:80/api/` +
+          this.state.input +
+          "/"
+      )
+      .then((res) => {
+        console.log(res.data);
+        const data_w = res.data;
+        this.statusElement.current.changeContent(data_w);
+      });
+  };
   setInput = (word) => {
     this.setState({ input: word });
   };
@@ -79,13 +94,69 @@ class Form extends React.Component {
 class Status extends React.Component {
   state = {
     data: null,
+    msgcode: 0,
   };
   changeContent = (data_w) => {
     this.setState({
       data: data_w,
     });
   };
+
   render() {
-    return <div id="status-container">{JSON.stringify(this.state.data)}</div>;
+    return this.state.data != null ? (
+      this.state.data.Success == null ? (
+        <div id="status-container">
+          <div className="word-heading">
+            {this.state.data == null ? <div></div> : this.state.data.word}
+          </div>
+          <div className="meaning-set">
+            {this.state.data == null ? (
+              <div></div>
+            ) : (
+              this.state.data.meanings.map((meaning) => (
+                <div className="meaning-container">
+                  <div className="pos">{meaning.partOfSpeech}</div>
+                  {meaning.definitions.map((def) => (
+                    <div className="def-container">
+                      <div className="def">{def.definition}</div>
+                      {def.example != null ? (
+                        <div className="exp"> Example: "{def.example}"</div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      ) : (
+        <div id="message-container">
+          <div className="Message">{this.state.data.Message}</div>
+        </div>
+      )
+    ) : (
+      <div></div>
+    );
+  }
+}
+
+class Meaning extends React.Component {
+  state = {
+    meaning: this.props.data,
+  };
+  render() {
+    return (
+      <div className="meaning-container">
+        <div className="pos">{this.state.meaning.meaning.partOfSpeech}</div>
+        {this.state.meaning.meaning.definitions.map((def) => (
+          <div className="def-container">
+            <div className="def">{def.definition}</div>
+            <div className="exp"> Example: "{def.example}"</div>
+          </div>
+        ))}
+      </div>
+    );
   }
 }
