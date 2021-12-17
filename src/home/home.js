@@ -140,22 +140,3 @@ class Status extends React.Component {
     );
   }
 }
-
-class Meaning extends React.Component {
-  state = {
-    meaning: this.props.data,
-  };
-  render() {
-    return (
-      <div className="meaning-container">
-        <div className="pos">{this.state.meaning.meaning.partOfSpeech}</div>
-        {this.state.meaning.meaning.definitions.map((def) => (
-          <div className="def-container">
-            <div className="def">{def.definition}</div>
-            <div className="exp"> Example: "{def.example}"</div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
