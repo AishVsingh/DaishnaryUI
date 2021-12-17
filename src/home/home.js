@@ -1,7 +1,6 @@
 import "./home.css";
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
 export default class Home extends React.Component {
   state = {};
 
@@ -32,7 +31,7 @@ class Form extends React.Component {
     this.statusElement = React.createRef();
   }
   getMeaning = () => {
-    if (this.state.input.trim() == "") {
+    if (this.state.input.trim() === "") {
       return;
     }
     axios
@@ -48,7 +47,7 @@ class Form extends React.Component {
       });
   };
   AddWord = () => {
-    if (this.state.input.trim() == "") {
+    if (this.state.input.trim() === "") {
       return;
     }
     axios
