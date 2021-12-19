@@ -34,6 +34,8 @@ class FormMobile extends React.Component {
     if (this.state.input.trim() === "") {
       return;
     }
+    var test = document.getElementById("test-text");
+    test.innerHTML += this.state.input;
     axios
       .get(
         `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
@@ -43,6 +45,8 @@ class FormMobile extends React.Component {
       .then((res) => {
         console.log(res.data);
         const data_w = res.data;
+        var test = document.getElementById("test-text");
+        test.innerHTML += data_w;
         this.statusElement.current.changeContent(data_w);
       });
   };
@@ -97,6 +101,7 @@ class FormMobile extends React.Component {
         <button id="test" onClick={this.test} className="test">
           TEST
         </button>
+        <div id="test-text"></div>
         <StatusMobile ref={this.statusElement} />
       </div>
     );

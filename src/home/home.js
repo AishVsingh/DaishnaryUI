@@ -41,7 +41,6 @@ class Form extends React.Component {
           "/"
       )
       .then((res) => {
-        console.log(res.data);
         const data_w = res.data;
         this.statusElement.current.changeContent(data_w);
       });

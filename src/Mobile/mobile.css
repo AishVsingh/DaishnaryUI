@@ -18,6 +18,9 @@
   font-family: "EB Garamond", serif;
   border: white solid 2px;
 }
+#test-text {
+  font-size: 6vw;
+}
 #header-mobile {
   font-size: 23vw;
   margin: 1%;
