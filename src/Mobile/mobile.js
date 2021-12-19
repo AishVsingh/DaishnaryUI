@@ -47,20 +47,24 @@ class FormMobile extends React.Component {
       });
   };
   AddWord = () => {
-    if (this.state.input.trim() === "") {
-      return;
+    try {
+      if (this.state.input.trim() === "") {
+        return;
+      }
+      axios
+        .post(
+          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
+            this.state.input.toLowerCase() +
+            "/"
+        )
+        .then((res) => {
+          console.log(res.data);
+          const data_w = res.data;
+          this.statusElement.current.changeContent(data_w);
+        });
+    } catch (err) {
+      window.alert(err.message);
     }
-    axios
-      .post(
-        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
-          this.state.input.toLowerCase() +
-          "/"
-      )
-      .then((res) => {
-        console.log(res.data);
-        const data_w = res.data;
-        this.statusElement.current.changeContent(data_w);
-      });
   };
   setInput = (word) => {
     this.setState({ input: word });
