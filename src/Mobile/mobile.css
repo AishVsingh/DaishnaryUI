@@ -4,6 +4,20 @@
   margin-bottom: 10%;
 }
 
+#test {
+  margin: 5%;
+  display: block;
+  background-color: white;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  padding: 2%;
+  font-size: 6vw;
+  border-radius: 5px;
+  font-family: "EB Garamond", serif;
+  border: white solid 2px;
+}
 #header-mobile {
   font-size: 23vw;
   margin: 1%;

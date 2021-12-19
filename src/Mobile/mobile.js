@@ -37,7 +37,7 @@ class FormMobile extends React.Component {
     axios
       .get(
         `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
-          this.state.input +
+          this.state.input.toLowerCase() +
           "/"
       )
       .then((res) => {
@@ -53,7 +53,7 @@ class FormMobile extends React.Component {
     axios
       .post(
         `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
-          this.state.input +
+          this.state.input.toLowerCase() +
           "/"
       )
       .then((res) => {
@@ -64,6 +64,10 @@ class FormMobile extends React.Component {
   };
   setInput = (word) => {
     this.setState({ input: word });
+  };
+
+  test = () => {
+    window.alert("Test");
   };
 
   render() {
@@ -86,6 +90,9 @@ class FormMobile extends React.Component {
             </button>
           </div>
         </div>
+        <button id="test" onClick={this.test} className="test">
+          TEST
+        </button>
         <StatusMobile ref={this.statusElement} />
       </div>
     );
