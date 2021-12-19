@@ -48,6 +48,9 @@ class FormMobile extends React.Component {
         var test = document.getElementById("test-text");
         test.innerHTML += data_w;
         this.statusElement.current.changeContent(data_w);
+      })
+      .catch((err) => {
+        window.alert(err.message);
       });
   };
   AddWord = () => {
@@ -65,6 +68,9 @@ class FormMobile extends React.Component {
           console.log(res.data);
           const data_w = res.data;
           this.statusElement.current.changeContent(data_w);
+        })
+        .catch((err) => {
+          window.alert(err.message);
         });
     } catch (err) {
       window.alert(err.message);
@@ -75,6 +81,19 @@ class FormMobile extends React.Component {
   };
 
   test = () => {
+    axios
+      .get(
+        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
+          this.state.input.toLowerCase() +
+          "/"
+      )
+      .then((res) => {
+        console.log(res.data);
+        const data_w = res.data;
+        var test = document.getElementById("test-text");
+        test.innerHTML += data_w;
+        this.statusElement.current.changeContent(data_w);
+      });
     window.alert("Test");
   };
 
