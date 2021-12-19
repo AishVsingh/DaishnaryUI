@@ -77,7 +77,11 @@ class Form extends React.Component {
           name="word"
         />
         <div className="button-panel">
-          <button onClick={this.getMeaning} className="action-button">
+          <button
+            onTouchStart={this.getMeaning}
+            onClick={this.getMeaning}
+            className="action-button"
+          >
             Get Meaning
           </button>
           <button onClick={this.AddWord} className="action-button">
