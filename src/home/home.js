@@ -36,7 +36,7 @@ class Form extends React.Component {
     }
     axios
       .get(
-        `http://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:80/api/` +
+        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
           this.state.input +
           "/"
       )
@@ -52,7 +52,7 @@ class Form extends React.Component {
     }
     axios
       .post(
-        `http://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:80/api/` +
+        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
           this.state.input +
           "/"
       )
