@@ -70,7 +70,7 @@ class FormMobile extends React.Component {
           this.statusElement.current.changeContent(data_w);
         })
         .catch((err) => {
-          window.alert(err.message);
+          window.alert(err);
         });
     } catch (err) {
       window.alert(err.message);
