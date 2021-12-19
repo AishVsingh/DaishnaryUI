@@ -62,9 +62,7 @@ class FormMobile extends React.Component {
         .post(
           `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
             this.state.input.toLowerCase() +
-            "/" +
-            "?nocache=" +
-            new Date().getTime()
+            "/"
         )
         .then((res) => {
           console.log(res.data);
