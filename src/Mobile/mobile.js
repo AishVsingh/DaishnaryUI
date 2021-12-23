@@ -34,7 +34,7 @@ class FormMobile extends React.Component {
 
   getBaseUrl = () => {
     return (
-      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
+      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/words/` +
       this.state.input.toLowerCase().trim() +
       "/"
     );
@@ -88,8 +88,8 @@ class FormMobile extends React.Component {
       }
       axios
         .post(
-          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
-            this.state.input.toLowerCase() +
+          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/words/` +
+            this.state.input.toLowerCase().trim() +
             "/"
         )
         .then((res) => {
