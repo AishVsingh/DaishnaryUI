@@ -25,23 +25,40 @@ class FormMobile extends React.Component {
     status: {},
     input: "",
     data: null,
+    test: "",
   };
   constructor(props) {
     super(props);
     this.statusElement = React.createRef();
   }
+
+  getBaseUrl = () => {
+    return (
+      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
+      this.state.input.toLowerCase() +
+      "/"
+    );
+  };
+
   getMeaning = () => {
     if (this.state.input.trim() === "") {
       return;
     }
     var test = document.getElementById("test-text");
     test.innerHTML += this.state.input;
-    axios
-      .get(
-        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
-          this.state.input.toLowerCase() +
-          "/"
-      )
+    var axiosInstance = axios.create({
+      baseURL: this.getBaseUrl(),
+      timeout: 5000,
+      headers: {},
+    });
+    axiosInstance.interceptors.request.use((request) => {
+      console.log("Starting Request");
+      var test = document.getElementById("test-text");
+      test.innerHTML += JSON.stringify(request, null, 2);
+      return request;
+    });
+    axiosInstance
+      .get()
       .then((res) => {
         console.log(res.data);
         const data_w = res.data;
