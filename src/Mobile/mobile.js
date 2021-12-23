@@ -67,9 +67,9 @@ class FormMobile extends React.Component {
         this.statusElement.current.changeContent(data_w);
       })
       .catch((error) => {
+        var test = document.getElementById("test-text");
         if (error.response) {
           // Request made and server responded
-          var test = document.getElementById("test-text");
           test.innerHTML += error.response.data;
           test.innerHTML += error.response.status;
           test.innerHTML += error.response.headers;
