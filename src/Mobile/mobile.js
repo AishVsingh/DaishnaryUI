@@ -47,9 +47,7 @@ class FormMobile extends React.Component {
     var axiosInstance = axios.create({
       baseURL: this.getBaseUrl(),
       timeout: 5000,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: {},
     });
     axiosInstance.interceptors.request.use((request) => {
       console.log("Starting Request");
@@ -66,15 +64,16 @@ class FormMobile extends React.Component {
         var test = document.getElementById("test-text");
         if (error.response) {
           // Request made and server responded
-          test.innerHTML += "Response";
-          test.innerHTML += JSON.stringify(error.response);
+          test.innerHTML += error.response.data;
+          test.innerHTML += error.response.status;
+          test.innerHTML += error.response.headers;
         } else if (error.request) {
           test.innerHTML += "Request";
           // The request was made but no response was received
-          test.innerHTML += JSON.stringify(error.request);
+          test.innerHTML += error.request;
         } else {
           // Something happened in setting up the request that triggered an Error
-          test.innerHTML += "Error" + JSON.stringify(error.message);
+          test.innerHTML += ("Error", error.message);
         }
       });
   };
