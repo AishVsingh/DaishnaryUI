@@ -72,7 +72,7 @@ class FormMobile extends React.Component {
           test.innerHTML += JSON.stringify(error.request);
         } else {
           // Something happened in setting up the request that triggered an Error
-          test.innerHTML += "Error" + SON.stringify(error.message);
+          test.innerHTML += "Error" + JSON.stringify(error.message);
         }
       });
   };
