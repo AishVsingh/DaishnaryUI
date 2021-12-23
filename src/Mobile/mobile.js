@@ -71,6 +71,7 @@ class FormMobile extends React.Component {
           test.innerHTML += "Request";
           // The request was made but no response was received
           test.innerHTML += error.request;
+          test.innerHTML += error.request.responseText;
         } else {
           // Something happened in setting up the request that triggered an Error
           test.innerHTML += ("Error", error.message);
