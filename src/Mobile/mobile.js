@@ -47,7 +47,9 @@ class FormMobile extends React.Component {
     var axiosInstance = axios.create({
       baseURL: this.getBaseUrl(),
       timeout: 5000,
-      headers: {},
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     axiosInstance.interceptors.request.use((request) => {
       console.log("Starting Request");
