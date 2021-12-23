@@ -66,8 +66,20 @@ class FormMobile extends React.Component {
         test.innerHTML += data_w;
         this.statusElement.current.changeContent(data_w);
       })
-      .catch((err) => {
-        window.alert(err.message);
+      .catch((error) => {
+        if (error.response) {
+          // Request made and server responded
+          var test = document.getElementById("test-text");
+          test.innerHTML += error.response.data;
+          test.innerHTML += error.response.status;
+          test.innerHTML += error.response.headers;
+        } else if (error.request) {
+          // The request was made but no response was received
+          test.innerHTML += error.request;
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          test.innerHTML += ("Error", error.message);
+        }
       });
   };
   AddWord = () => {
