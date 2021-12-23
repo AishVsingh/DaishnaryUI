@@ -35,7 +35,7 @@ class FormMobile extends React.Component {
   getBaseUrl = () => {
     return (
       `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/` +
-      this.state.input.toLowerCase() +
+      this.state.input.toLowerCase().trim() +
       "/"
     );
   };
