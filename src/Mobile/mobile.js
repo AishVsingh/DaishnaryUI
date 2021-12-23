@@ -64,15 +64,15 @@ class FormMobile extends React.Component {
         var test = document.getElementById("test-text");
         if (error.response) {
           // Request made and server responded
-          test.innerHTML += error.response.data;
-          test.innerHTML += error.response.status;
-          test.innerHTML += error.response.headers;
+          test.innerHTML += "Response";
+          test.innerHTML += JSON.stringify(error.response);
         } else if (error.request) {
+          test.innerHTML += "Request";
           // The request was made but no response was received
-          test.innerHTML += error.request;
+          test.innerHTML += JSON.stringify(error.request);
         } else {
           // Something happened in setting up the request that triggered an Error
-          test.innerHTML += ("Error", error.message);
+          test.innerHTML += "Error" + SON.stringify(error.message);
         }
       });
   };
