@@ -102,7 +102,6 @@ class FormMobile extends React.Component {
     }
     var axiosInstance = axios.create({
       baseURL: this.getBaseUrl(),
-      timeout: 5000,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
