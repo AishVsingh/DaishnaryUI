@@ -8,7 +8,7 @@ export default class Home extends React.Component {
     return (
       <div id="home">
         <Header />
-        <Form />
+        <MetaData />
       </div>
     );
   }
@@ -17,6 +17,64 @@ export default class Home extends React.Component {
 class Header extends React.Component {
   render() {
     return <div id="header">Daishnary</div>;
+  }
+}
+
+class MetaData extends React.Component {
+  state = {
+    count: 0,
+  };
+  constructor(props) {
+    super(props);
+
+    this.handler = this.handler.bind(this);
+  }
+
+  handler() {
+    try {
+      axios
+        .get(
+          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/metadata/count`
+        )
+        .then((res) => {
+          console.log(res.data);
+          const count_w = res.data["word-count"];
+          this.setState({ count: count_w });
+        })
+        .catch((err) => {
+          window.alert(err);
+        });
+    } catch (err) {
+      window.alert(err.message);
+    }
+  }
+  componentDidMount() {
+    try {
+      axios
+        .get(
+          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/metadata/count`
+        )
+        .then((res) => {
+          console.log(res.data);
+          const count_w = res.data["word-count"];
+          this.setState({ count: count_w });
+        })
+        .catch((err) => {
+          window.alert(err);
+        });
+    } catch (err) {
+      window.alert(err.message);
+    }
+  }
+  render() {
+    return (
+      <div id="top-container">
+        <div id="meta-data">
+          <div id="meta-data-count"> Count : {this.state.count}</div>
+        </div>
+        <Form handler={this.handler} />
+      </div>
+    );
   }
 }
 
@@ -58,6 +116,7 @@ class Form extends React.Component {
       .then((res) => {
         console.log(res.data);
         const data_w = res.data;
+        this.props.handler();
         this.statusElement.current.changeContent(data_w);
       });
   };

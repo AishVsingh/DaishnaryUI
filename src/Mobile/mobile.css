@@ -143,3 +143,15 @@
   font-size: 9vw;
   text-align: center;
 }
+
+#meta-data-mobile {
+  font-size: 6vw;
+}
+
+#meta-data-mobile-count {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-bottom: 3%;
+  padding-right: 5%;
+}

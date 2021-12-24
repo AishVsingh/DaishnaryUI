@@ -110,3 +110,16 @@
   font-size: 1.4vw;
   text-align: center;
 }
+
+#meta-data {
+  font-size: 2vw;
+}
+
+#meta-data-count {
+  font-size: 2vw;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
+  padding-bottom: 3%;
+  padding-right: 5%;
+}

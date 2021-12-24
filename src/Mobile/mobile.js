@@ -8,7 +8,7 @@ export default class Mobile extends React.Component {
     return (
       <div id="home-mobile">
         <HeaderMobile />
-        <FormMobile />
+        <MetaDataMobile />
       </div>
     );
   }
@@ -19,7 +19,63 @@ class HeaderMobile extends React.Component {
     return <div id="header-mobile">Daishnary</div>;
   }
 }
+class MetaDataMobile extends React.Component {
+  state = {
+    count: 0,
+  };
+  constructor(props) {
+    super(props);
 
+    this.handler = this.handler.bind(this);
+  }
+
+  handler() {
+    try {
+      axios
+        .get(
+          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/metadata/count`
+        )
+        .then((res) => {
+          console.log(res.data);
+          const count_w = res.data["word-count"];
+          this.setState({ count: count_w });
+        })
+        .catch((err) => {
+          window.alert(err);
+        });
+    } catch (err) {
+      window.alert(err.message);
+    }
+  }
+  componentDidMount() {
+    try {
+      axios
+        .get(
+          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/metadata/count`
+        )
+        .then((res) => {
+          console.log(res.data);
+          const count_w = res.data["word-count"];
+          this.setState({ count: count_w });
+        })
+        .catch((err) => {
+          window.alert(err);
+        });
+    } catch (err) {
+      window.alert(err.message);
+    }
+  }
+  render() {
+    return (
+      <div id="top-container">
+        <div id="meta-data-mobile">
+          <div id="meta-data-mobile-count"> Count : {this.state.count}</div>
+        </div>
+        <FormMobile handler={this.handler} />
+      </div>
+    );
+  }
+}
 class FormMobile extends React.Component {
   state = {
     status: {},
@@ -95,6 +151,7 @@ class FormMobile extends React.Component {
         .then((res) => {
           console.log(res.data);
           const data_w = res.data;
+          this.props.handler();
           this.statusElement.current.changeContent(data_w);
         })
         .catch((err) => {
