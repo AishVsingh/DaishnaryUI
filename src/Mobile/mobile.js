@@ -100,65 +100,34 @@ class FormMobile extends React.Component {
     if (this.state.input.trim() === "") {
       return;
     }
-    var axiosInstance = axios.create({
-      baseURL: this.getBaseUrl(),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
-    axiosInstance.interceptors.request.use((request) => {
-      console.log("Starting Request");
-      console.log(request);
-      return request;
-    });
-    axiosInstance
-      .get()
+
+    axios
+      .get(this.getBaseUrl())
       .then((res) => {
         console.log(res.data);
         const data_w = res.data;
         this.statusElement.current.changeContent(data_w);
       })
-      .catch((error) => {
-        var test = document.getElementById("test-text");
-        console.log(error);
-        if (error.response) {
-          // Request made and server responded
-          test.innerHTML += error.response.data;
-          test.innerHTML += error.response.status;
-          test.innerHTML += error.response.headers;
-        } else if (error.request) {
-          test.innerHTML += "Request";
-          // The request was made but no response was received
-          test.innerHTML += error.request.responseText;
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          test.innerHTML += ("Error", error.message);
-        }
+      .catch((err) => {
+        window.alert(err);
       });
   };
   AddWord = () => {
-    try {
-      if (this.state.input.trim() === "") {
-        return;
-      }
-      axios
-        .post(
-          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/words/` +
-            this.state.input.toLowerCase().trim() +
-            "/"
-        )
-        .then((res) => {
-          console.log(res.data);
-          const data_w = res.data;
-          this.props.handler();
-          this.statusElement.current.changeContent(data_w);
-        })
-        .catch((err) => {
-          window.alert(err);
-        });
-    } catch (err) {
-      window.alert(err.message);
+    if (this.state.input.trim() === "") {
+      return;
     }
+
+    axios
+      .post(this.getBaseUrl())
+      .then((res) => {
+        console.log(res.data);
+        const data_w = res.data;
+        this.props.handler();
+        this.statusElement.current.changeContent(data_w);
+      })
+      .catch((err) => {
+        window.alert(err);
+      });
   };
   setInput = (word) => {
     this.setState({ input: word });
@@ -184,7 +153,6 @@ class FormMobile extends React.Component {
             </button>
           </div>
         </div>
-        <div id="test-text"></div>
         <StatusMobile ref={this.statusElement} />
       </div>
     );

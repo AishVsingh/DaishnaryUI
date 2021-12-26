@@ -88,19 +88,25 @@ class Form extends React.Component {
     super(props);
     this.statusElement = React.createRef();
   }
+  getBaseUrl = () => {
+    return (
+      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/words/` +
+      this.state.input.toLowerCase().trim() +
+      "/"
+    );
+  };
   getMeaning = () => {
     if (this.state.input.trim() === "") {
       return;
     }
     axios
-      .get(
-        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/words/` +
-          this.state.input.toLowerCase().trim() +
-          "/"
-      )
+      .get(this.getBaseUrl())
       .then((res) => {
         const data_w = res.data;
         this.statusElement.current.changeContent(data_w);
+      })
+      .catch((err) => {
+        window.alert(err);
       });
   };
   AddWord = () => {
@@ -108,16 +114,15 @@ class Form extends React.Component {
       return;
     }
     axios
-      .post(
-        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/words/` +
-          this.state.input.toLowerCase().trim() +
-          "/"
-      )
+      .post(this.getBaseUrl())
       .then((res) => {
         console.log(res.data);
         const data_w = res.data;
         this.props.handler();
         this.statusElement.current.changeContent(data_w);
+      })
+      .catch((err) => {
+        window.alert(err);
       });
   };
   setInput = (word) => {
