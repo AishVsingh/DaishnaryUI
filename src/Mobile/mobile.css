@@ -38,6 +38,7 @@
   border-radius: 10px;
   width: 80%;
   align-content: center;
+  margin-top: 3%;
 }
 
 #word-input-mobile {
@@ -154,4 +155,8 @@
   text-align: center;
   padding-bottom: 3%;
   padding-right: 5%;
+}
+
+a {
+  text-decoration: underline;
 }

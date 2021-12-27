@@ -21,24 +21,25 @@ class HeaderMobile extends React.Component {
 }
 class MetaDataMobile extends React.Component {
   state = {
-    count: 0,
+    userData: {},
   };
   constructor(props) {
     super(props);
-
+    this.formElement = React.createRef();
     this.handler = this.handler.bind(this);
+  }
+  componentDidMount() {
+    this.handler();
   }
 
   handler() {
     try {
       axios
-        .get(
-          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/metadata/count`
-        )
+        .get(`http://127.0.0.1:8000/api/2/metadata/`)
         .then((res) => {
           console.log(res.data);
-          const count_w = res.data["word-count"];
-          this.setState({ count: count_w });
+          const res_data = res.data;
+          this.setState({ userData: res_data });
         })
         .catch((err) => {
           window.alert(err);
@@ -47,31 +48,30 @@ class MetaDataMobile extends React.Component {
       window.alert(err.message);
     }
   }
-  componentDidMount() {
-    try {
-      axios
-        .get(
-          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/metadata/count`
-        )
-        .then((res) => {
-          console.log(res.data);
-          const count_w = res.data["word-count"];
-          this.setState({ count: count_w });
-        })
-        .catch((err) => {
-          window.alert(err);
-        });
-    } catch (err) {
-      window.alert(err.message);
+
+  getTodayWord = () => {
+    if (this.state.userData.todayWord != null) {
+      this.formElement.current.setState({
+        input: this.state.userData.todayWord,
+      });
+      this.formElement.current.state.input = this.state.userData.todayWord;
+      this.formElement.current.getMeaning();
     }
-  }
+  };
   render() {
     return (
       <div id="top-container">
         <div id="meta-data-mobile">
-          <div id="meta-data-mobile-count"> Count : {this.state.count}</div>
+          <div id="meta-data-mobile-count">
+            Count : {this.state.userData.count}
+          </div>
+          <div id="meta-data-mobile-count">
+            <a onClick={this.getTodayWord}>
+              Today's word : {this.state.userData.todayWord}
+            </a>
+          </div>
         </div>
-        <FormMobile handler={this.handler} />
+        <FormMobile ref={this.formElement} handler={this.handler} />
       </div>
     );
   }
@@ -90,7 +90,7 @@ class FormMobile extends React.Component {
 
   getBaseUrl = () => {
     return (
-      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/words/` +
+      `http://127.0.0.1:8000/api/2/words/` +
       this.state.input.toLowerCase().trim() +
       "/"
     );
