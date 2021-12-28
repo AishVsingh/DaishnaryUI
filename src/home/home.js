@@ -73,7 +73,7 @@ class MetaData extends React.Component {
             Count : {this.state.userData.count}
           </div>
           <div id="meta-data-item-todayWord" className="meta-data-item">
-            <a onClick={this.getTodayWord}>
+            <a href="/" onClick={this.getTodayWord}>
               Today's word : {this.state.userData.todayWord}
             </a>
           </div>

@@ -31,9 +31,6 @@ class FormHome extends React.Component {
     status: "Welcome!",
     username: "",
   };
-  constructor(props) {
-    super(props);
-  }
 
   getBaseUrl = () => {
     return `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/auth/`;
@@ -47,12 +44,12 @@ class FormHome extends React.Component {
   };
 
   setStatus = (msg) => {
-    if (msg.trim() != "") this.setState({ status: msg });
+    if (msg.trim() !== "") this.setState({ status: msg });
   };
 
   redirect = (token) => {
     console.log(token);
-    if (token != null)
+    if (token !== null)
       this.props.Redirecthandler({
         auth: true,
         token: token,
@@ -65,8 +62,7 @@ class FormHome extends React.Component {
       axios
         .post(this.getBaseUrl(), this.getCreds())
         .then((res) => {
-          const data_w = res.data;
-          if (res.status == 200) {
+          if (res.status === 200) {
             this.setStatus("Login successful !");
             this.redirect(res.data.token);
           }
@@ -82,6 +78,9 @@ class FormHome extends React.Component {
                 break;
               case 403:
                 this.setStatus("Permission Denied !");
+                break;
+              default:
+                this.setStatus("login Failed.\n\nUnknown error!");
                 break;
             }
           }

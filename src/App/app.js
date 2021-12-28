@@ -34,14 +34,13 @@ export default class App extends React.Component {
   handler = (data) => {
     if (data.auth && data.token != null) {
       this.setState(data);
-      this.state.token = data.token;
     }
   };
 
   render() {
     return (
       <div id="world-container">
-        {this.state.auth == false
+        {this.state.auth === false
           ? getLogin(this.handler)
           : getHome({ token: this.state.token, username: this.state.username })}
       </div>
