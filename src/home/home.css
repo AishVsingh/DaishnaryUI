@@ -115,11 +115,15 @@
   font-size: 2vw;
 }
 
-#meta-data-count {
+.meta-data-item {
   font-size: 2vw;
   margin-left: auto;
   margin-right: auto;
   text-align: right;
   padding-bottom: 3%;
   padding-right: 5%;
+}
+
+#meta-data-item-todayWord {
+  text-align: center;
 }

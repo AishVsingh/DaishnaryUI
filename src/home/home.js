@@ -8,7 +8,7 @@ export default class Home extends React.Component {
     return (
       <div id="home">
         <Header />
-        <MetaData />
+        <MetaData user={this.props.data} />
       </div>
     );
   }
@@ -22,24 +22,30 @@ class Header extends React.Component {
 
 class MetaData extends React.Component {
   state = {
-    count: 0,
+    userData: {},
   };
   constructor(props) {
     super(props);
-
+    this.formElement = React.createRef();
     this.handler = this.handler.bind(this);
+  }
+
+  componentDidMount() {
+    this.handler();
   }
 
   handler() {
     try {
       axios
         .get(
-          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/metadata/count`
+          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.user.username}/metadata/`,
+          {
+            headers: { Authorization: `Token ${this.props.user.token}` },
+          }
         )
         .then((res) => {
-          console.log(res.data);
-          const count_w = res.data["word-count"];
-          this.setState({ count: count_w });
+          const res_data = res.data;
+          this.setState({ userData: res_data });
         })
         .catch((err) => {
           window.alert(err);
@@ -48,31 +54,35 @@ class MetaData extends React.Component {
       window.alert(err.message);
     }
   }
-  componentDidMount() {
-    try {
-      axios
-        .get(
-          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/metadata/count`
-        )
-        .then((res) => {
-          console.log(res.data);
-          const count_w = res.data["word-count"];
-          this.setState({ count: count_w });
-        })
-        .catch((err) => {
-          window.alert(err);
-        });
-    } catch (err) {
-      window.alert(err.message);
+
+  getTodayWord = () => {
+    if (this.state.userData.todayWord != null) {
+      this.formElement.current.setState({
+        input: this.state.userData.todayWord,
+      });
+      this.formElement.current.state.input = this.state.userData.todayWord;
+      this.formElement.current.getMeaning();
     }
-  }
+  };
+
   render() {
     return (
       <div id="top-container">
         <div id="meta-data">
-          <div id="meta-data-count"> Count : {this.state.count}</div>
+          <div className="meta-data-item">
+            Count : {this.state.userData.count}
+          </div>
+          <div id="meta-data-item-todayWord" className="meta-data-item">
+            <a onClick={this.getTodayWord}>
+              Today's word : {this.state.userData.todayWord}
+            </a>
+          </div>
         </div>
-        <Form handler={this.handler} />
+        <Form
+          data={this.props.user}
+          ref={this.formElement}
+          handler={this.handler}
+        />
       </div>
     );
   }
@@ -88,19 +98,23 @@ class Form extends React.Component {
     super(props);
     this.statusElement = React.createRef();
   }
+
   getBaseUrl = () => {
     return (
-      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/words/` +
+      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
       this.state.input.toLowerCase().trim() +
       "/"
     );
   };
+
   getMeaning = () => {
     if (this.state.input.trim() === "") {
       return;
     }
     axios
-      .get(this.getBaseUrl())
+      .get(this.getBaseUrl(), {
+        headers: { Authorization: `Token ${this.props.data.token}` },
+      })
       .then((res) => {
         const data_w = res.data;
         this.statusElement.current.changeContent(data_w);
@@ -114,9 +128,14 @@ class Form extends React.Component {
       return;
     }
     axios
-      .post(this.getBaseUrl())
+      .post(
+        this.getBaseUrl(),
+        {},
+        {
+          headers: { Authorization: `Token ${this.props.data.token}` },
+        }
+      )
       .then((res) => {
-        console.log(res.data);
         const data_w = res.data;
         this.props.handler();
         this.statusElement.current.changeContent(data_w);

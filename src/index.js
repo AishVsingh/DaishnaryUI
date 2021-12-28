@@ -1,20 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Mobile from "./Mobile/mobile";
-import Home from "./home/home";
 import reportWebVitals from "./reportWebVitals";
+import App from "./App/app";
 
-function getHome() {
-  console.log(window.innerWidth > 375);
-  if (window.innerWidth > 600) {
-    return <Home />;
-  } else {
-    return <Mobile />;
-  }
-}
 ReactDOM.render(
-  <React.StrictMode>{getHome()}</React.StrictMode>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

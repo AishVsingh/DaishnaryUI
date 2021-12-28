@@ -8,7 +8,7 @@ export default class Mobile extends React.Component {
     return (
       <div id="home-mobile">
         <HeaderMobile />
-        <MetaDataMobile />
+        <MetaDataMobile user={this.props.data} />
       </div>
     );
   }
@@ -35,9 +35,13 @@ class MetaDataMobile extends React.Component {
   handler() {
     try {
       axios
-        .get(`http://127.0.0.1:8000/api/2/metadata/`)
+        .get(
+          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.user.username}/metadata/`,
+          {
+            headers: { Authorization: `Token ${this.props.user.token}` },
+          }
+        )
         .then((res) => {
-          console.log(res.data);
           const res_data = res.data;
           this.setState({ userData: res_data });
         })
@@ -58,6 +62,7 @@ class MetaDataMobile extends React.Component {
       this.formElement.current.getMeaning();
     }
   };
+
   render() {
     return (
       <div id="top-container">
@@ -71,7 +76,11 @@ class MetaDataMobile extends React.Component {
             </a>
           </div>
         </div>
-        <FormMobile ref={this.formElement} handler={this.handler} />
+        <FormMobile
+          data={this.props.user}
+          ref={this.formElement}
+          handler={this.handler}
+        />
       </div>
     );
   }
@@ -90,7 +99,7 @@ class FormMobile extends React.Component {
 
   getBaseUrl = () => {
     return (
-      `http://127.0.0.1:8000/api/2/words/` +
+      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
       this.state.input.toLowerCase().trim() +
       "/"
     );
@@ -100,11 +109,11 @@ class FormMobile extends React.Component {
     if (this.state.input.trim() === "") {
       return;
     }
-
     axios
-      .get(this.getBaseUrl())
+      .get(this.getBaseUrl(), {
+        headers: { Authorization: `Token ${this.props.data.token}` },
+      })
       .then((res) => {
-        console.log(res.data);
         const data_w = res.data;
         this.statusElement.current.changeContent(data_w);
       })
@@ -118,9 +127,14 @@ class FormMobile extends React.Component {
     }
 
     axios
-      .post(this.getBaseUrl())
+      .post(
+        this.getBaseUrl(),
+        {},
+        {
+          headers: { Authorization: `Token ${this.props.data.token}` },
+        }
+      )
       .then((res) => {
-        console.log(res.data);
         const data_w = res.data;
         this.props.handler();
         this.statusElement.current.changeContent(data_w);

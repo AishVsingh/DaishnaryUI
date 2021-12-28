@@ -1,0 +1,75 @@
+.login-input-mobile {
+  display: block;
+  width: 100%;
+  outline: none;
+  padding: 2%;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 5vw;
+  border: none;
+  margin-bottom: 5%;
+  text-align: center;
+}
+
+.login-input {
+  display: block;
+  width: 40%;
+  outline: none;
+  padding: 2%;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 2vw;
+  border: none;
+  margin-bottom: 5%;
+  text-align: center;
+}
+
+#sub-header {
+  font-size: 2vw;
+  margin: 1%;
+  margin-bottom: 5%;
+  margin-top: 0;
+  user-select: none;
+  text-align: center;
+}
+
+#header-mobile-login {
+  font-size: 23vw;
+  margin: 1%;
+  margin-bottom: 0%;
+  user-select: none;
+  text-align: center;
+}
+
+#login-status-box {
+  font-size: 6vw;
+  text-align: center;
+  padding-bottom: 5%;
+  font-weight: lighter;
+  font-style: italic;
+}
+#login-status-box-home {
+  font-size: 2vw;
+  text-align: center;
+  padding-bottom: 5%;
+  font-weight: lighter;
+  font-style: italic;
+}
+
+#login-button {
+  display: block;
+  background-color: white;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  user-select: none;
+  border: none;
+  padding: 2%;
+  font-size: 2.5vw;
+  border-radius: 10px;
+  font-family: "EB Garamond", serif;
+  border: white solid 2px;
+  transition: all 0.3s ease-in-out;
+}
