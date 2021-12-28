@@ -43,7 +43,7 @@ class FormMobile extends React.Component {
   };
 
   setStatus = (msg) => {
-    if (msg.trim() != "") this.setState({ status: msg });
+    if (msg.trim() !== "") this.setState({ status: msg });
   };
 
   redirect = (token) => {
