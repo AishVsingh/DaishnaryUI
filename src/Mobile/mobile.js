@@ -71,9 +71,13 @@ class MetaDataMobile extends React.Component {
             Count : {this.state.userData.count}
           </div>
           <div id="meta-data-mobile-count">
-            <a href="#" onClick={this.getTodayWord}>
+            <button
+              className="todayWord-mobile"
+              href="#"
+              onClick={this.getTodayWord}
+            >
               Today's word : {this.state.userData.todayWord}
-            </a>
+            </button>
           </div>
         </div>
         <FormMobile

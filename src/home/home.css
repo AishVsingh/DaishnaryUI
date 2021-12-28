@@ -127,3 +127,13 @@
 #meta-data-item-todayWord {
   text-align: center;
 }
+
+.todayWord {
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 2vw;
+  background-color: transparent;
+  border: none;
+  font-family: "EB Garamond", serif;
+}
