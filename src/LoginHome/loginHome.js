@@ -48,7 +48,6 @@ class FormHome extends React.Component {
   };
 
   redirect = (token) => {
-    console.log(token);
     if (token !== null)
       this.props.Redirecthandler({
         auth: true,

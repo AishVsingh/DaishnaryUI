@@ -1,6 +1,7 @@
 import "./home.css";
 import axios from "axios";
 import React from "react";
+import Loading from "./static/loading.gif";
 export default class Home extends React.Component {
   state = {};
 
@@ -111,6 +112,7 @@ class Form extends React.Component {
     if (this.state.input.trim() === "") {
       return;
     }
+    this.statusElement.current.toggleLoading();
     axios
       .get(this.getBaseUrl(), {
         headers: { Authorization: `Token ${this.props.data.token}` },
@@ -127,6 +129,7 @@ class Form extends React.Component {
     if (this.state.input.trim() === "") {
       return;
     }
+    this.statusElement.current.toggleLoading();
     axios
       .post(
         this.getBaseUrl(),
@@ -159,11 +162,7 @@ class Form extends React.Component {
           name="word"
         />
         <div className="button-panel">
-          <button
-            onTouchStart={this.getMeaning}
-            onClick={this.getMeaning}
-            className="action-button"
-          >
+          <button onClick={this.getMeaning} className="action-button">
             Get Meaning
           </button>
           <button onClick={this.AddWord} className="action-button">
@@ -180,15 +179,25 @@ class Status extends React.Component {
   state = {
     data: null,
     msgcode: 0,
+    loading: false,
+  };
+
+  toggleLoading = () => {
+    const curr = this.state.loading;
+    this.setState({ loading: !curr });
+    this.state.loading = !curr;
   };
   changeContent = (data_w) => {
+    this.toggleLoading();
     this.setState({
       data: data_w,
     });
   };
 
   render() {
-    return this.state.data != null ? (
+    return this.state.loading ? (
+      <img id="loading-gif" src={Loading}></img>
+    ) : this.state.data != null ? (
       this.state.data.Success == null ? (
         <div id="status-container">
           <div className="word-heading">

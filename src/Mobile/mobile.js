@@ -1,6 +1,7 @@
 import "./mobile.css";
 import axios from "axios";
 import React from "react";
+import Loading from "./static/loading.gif";
 export default class Mobile extends React.Component {
   state = {};
 
@@ -113,6 +114,7 @@ class FormMobile extends React.Component {
     if (this.state.input.trim() === "") {
       return;
     }
+    this.statusElement.current.toggleLoading();
     axios
       .get(this.getBaseUrl(), {
         headers: { Authorization: `Token ${this.props.data.token}` },
@@ -129,7 +131,7 @@ class FormMobile extends React.Component {
     if (this.state.input.trim() === "") {
       return;
     }
-
+    this.statusElement.current.toggleLoading();
     axios
       .post(
         this.getBaseUrl(),
@@ -181,15 +183,26 @@ class StatusMobile extends React.Component {
   state = {
     data: null,
     msgcode: 0,
+    loading: false,
   };
+
+  toggleLoading = () => {
+    const curr = this.state.loading;
+    this.setState({ loading: !curr });
+    this.state.loading = !curr;
+  };
+
   changeContent = (data_w) => {
+    this.toggleLoading();
     this.setState({
       data: data_w,
     });
   };
 
   render() {
-    return this.state.data != null ? (
+    return this.state.loading ? (
+      <img id="loading-gif-mobile" src={Loading}></img>
+    ) : this.state.data != null ? (
       this.state.data.Success == null ? (
         <div id="status-container">
           <div className="word-heading-mobile">
