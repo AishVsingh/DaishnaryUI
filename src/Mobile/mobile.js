@@ -187,9 +187,7 @@ class StatusMobile extends React.Component {
   };
 
   toggleLoading = () => {
-    const curr = this.state.loading;
-    this.setState({ loading: !curr });
-    this.state.loading = !curr;
+    this.setState({ loading: !this.state.loading });
   };
 
   changeContent = (data_w) => {
@@ -201,7 +199,7 @@ class StatusMobile extends React.Component {
 
   render() {
     return this.state.loading ? (
-      <img id="loading-gif-mobile" src={Loading}></img>
+      <img id="loading-gif-mobile" alt="Loading.." src={Loading}></img>
     ) : this.state.data != null ? (
       this.state.data.Success == null ? (
         <div id="status-container">
