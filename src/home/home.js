@@ -2,6 +2,7 @@ import "./home.css";
 import axios from "axios";
 import React from "react";
 import Loading from "./static/loading.gif";
+import Delete from "./static/delete.png";
 export default class Home extends React.Component {
   state = {};
 
@@ -65,19 +66,43 @@ class MetaData extends React.Component {
       this.formElement.current.getMeaning();
     }
   };
+  getBandWord = (e) => {
+    if (e.target.innerText != null) {
+      this.formElement.current.setState({
+        input: e.target.innerText,
+      });
+      this.formElement.current.state.input = e.target.innerText;
+      this.formElement.current.getMeaning();
+    }
+  };
 
   render() {
     return (
       <div id="top-container">
         <div id="meta-data">
-          <div className="meta-data-item">
+          <div className="word-band">
+            {this.state.userData.words == null ? (
+              <div></div>
+            ) : (
+              this.state.userData.words.map((word) => (
+                <button
+                  onClick={(word) => this.getBandWord(word)}
+                  className="word-band-word"
+                  word={word}
+                >
+                  {word}
+                </button>
+              ))
+            )}
+          </div>
+          <div className="meta-data-item" id="meta-data-item-count">
             Count : {this.state.userData.count}
           </div>
-          <div id="meta-data-item-todayWord" className="meta-data-item">
-            <button className="todayWord" href="#" onClick={this.getTodayWord}>
-              Today's word : {this.state.userData.todayWord}
-            </button>
-          </div>
+        </div>
+        <div id="meta-data-item-todayWord" className="meta-data-item">
+          <button className="todayWord" href="#" onClick={this.getTodayWord}>
+            Today's word : {this.state.userData.todayWord}
+          </button>
         </div>
         <Form
           data={this.props.user}
@@ -151,6 +176,31 @@ class Form extends React.Component {
     this.setState({ input: word });
   };
 
+  DeleteWord = (word) => {
+    this.statusElement.current.toggleLoading();
+    axios
+      .post(
+        `http://127.0.0.1:8000/api/${this.props.data.username}/words/` +
+          word +
+          "/",
+        { action: "delete" },
+        {
+          headers: { Authorization: `Token ${this.props.data.token}` },
+        }
+      )
+      .then((res) => {
+        const data_w = res.data;
+        this.props.handler();
+        this.statusElement.current.changeContent(data_w);
+      })
+      .catch((err) => {
+        window.alert(err);
+      });
+  };
+  setInput = (word) => {
+    this.setState({ input: word });
+  };
+
   render() {
     return (
       <div id="form-container">
@@ -169,7 +219,7 @@ class Form extends React.Component {
             Add Word
           </button>
         </div>
-        <Status ref={this.statusElement} />
+        <Status delete={this.DeleteWord} ref={this.statusElement} />
       </div>
     );
   }
@@ -191,6 +241,10 @@ class Status extends React.Component {
       data: data_w,
     });
   };
+  delete = () => {
+    if (this.state.data.word === null) return;
+    this.props.delete(this.state.data.word);
+  };
 
   render() {
     return this.state.loading ? (
@@ -198,6 +252,13 @@ class Status extends React.Component {
     ) : this.state.data != null ? (
       this.state.data.Success == null ? (
         <div id="status-container">
+          <button
+            id="delete-button"
+            title="Delete this word"
+            onClick={this.delete}
+          >
+            <img id="delete-img" src={Delete}></img>
+          </button>
           <div className="word-heading">
             {this.state.data == null ? <div></div> : this.state.data.word}
           </div>
