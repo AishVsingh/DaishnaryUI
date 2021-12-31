@@ -180,7 +180,7 @@ class Form extends React.Component {
     this.statusElement.current.toggleLoading();
     axios
       .post(
-        `http://127.0.0.1:8000/api/${this.props.data.username}/words/` +
+        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
           word +
           "/",
         { action: "delete" },
