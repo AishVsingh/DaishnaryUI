@@ -257,7 +257,7 @@ class Status extends React.Component {
             title="Delete this word"
             onClick={this.delete}
           >
-            <img id="delete-img" src={Delete}></img>
+            <img id="delete-img" alt="Delete Word" src={Delete}></img>
           </button>
           <div className="word-heading">
             {this.state.data == null ? <div></div> : this.state.data.word}
