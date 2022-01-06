@@ -63,11 +63,34 @@ class MetaDataMobile extends React.Component {
       this.formElement.current.getMeaning();
     }
   };
-
+  getBandWord = (e) => {
+    if (e.target.innerText != null) {
+      this.formElement.current.setState({
+        input: e.target.innerText,
+      });
+      this.formElement.current.state.input = e.target.innerText;
+      this.formElement.current.getMeaning();
+    }
+  };
   render() {
     return (
       <div id="top-container">
         <div id="meta-data-mobile">
+          <div className="word-band-mobile">
+            {this.state.userData.words == null ? (
+              <div></div>
+            ) : (
+              this.state.userData.words.map((word) => (
+                <button
+                  onClick={(word) => this.getBandWord(word)}
+                  className="word-band-word-mobile"
+                  word={word}
+                >
+                  {word}
+                </button>
+              ))
+            )}
+          </div>
           <div id="meta-data-mobile-count">
             Count : {this.state.userData.count}
           </div>
