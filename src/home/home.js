@@ -2,7 +2,8 @@ import "./home.css";
 import axios from "axios";
 import React from "react";
 import Loading from "./static/loading.gif";
-import Delete from "./static/delete.png";
+import Delete from "./static/minus.png";
+import Add from "./static/plus.png";
 export default class Home extends React.Component {
   state = {};
 
@@ -150,14 +151,13 @@ class Form extends React.Component {
         window.alert(err);
       });
   };
-  AddWord = () => {
-    if (this.state.input.trim() === "") {
-      return;
-    }
+  AddWord = (word) => {
     this.statusElement.current.toggleLoading();
     axios
       .post(
-        this.getBaseUrl(),
+        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
+          word +
+          "/",
         {},
         {
           headers: { Authorization: `Token ${this.props.data.token}` },
@@ -215,11 +215,12 @@ class Form extends React.Component {
           <button onClick={this.getMeaning} className="action-button">
             Get Meaning
           </button>
-          <button onClick={this.AddWord} className="action-button">
-            Add Word
-          </button>
         </div>
-        <Status delete={this.DeleteWord} ref={this.statusElement} />
+        <Status
+          addword={this.AddWord}
+          delete={this.DeleteWord}
+          ref={this.statusElement}
+        />
       </div>
     );
   }
@@ -230,6 +231,8 @@ class Status extends React.Component {
     data: null,
     msgcode: 0,
     loading: false,
+    action: null,
+    actionFunction: null,
   };
 
   toggleLoading = () => {
@@ -237,6 +240,15 @@ class Status extends React.Component {
   };
   changeContent = (data_w) => {
     this.toggleLoading();
+    data_w.isAdded
+      ? this.setState({
+          action: Delete,
+          actionFunction: this.delete,
+        })
+      : this.setState({
+          action: Add,
+          actionFunction: this.add,
+        });
     this.setState({
       data: data_w,
     });
@@ -246,18 +258,24 @@ class Status extends React.Component {
     this.props.delete(this.state.data.word);
   };
 
+  add = () => {
+    if (this.state.data.word === null) return;
+    this.props.addword(this.state.data.word);
+  };
+
   render() {
     return this.state.loading ? (
       <img id="loading-gif" alt="Loading.." src={Loading}></img>
     ) : this.state.data != null ? (
       this.state.data.Success == null ? (
         <div id="status-container">
-          <button
-            id="delete-button"
-            title="Delete this word"
-            onClick={this.delete}
-          >
-            <img id="delete-img" alt="Delete Word" src={Delete}></img>
+          <button id="internal-action-button" title="Delete this word">
+            <img
+              id="internal-action-img"
+              alt="Action"
+              onClick={this.state.actionFunction}
+              src={this.state.action}
+            ></img>
           </button>
           <div className="word-heading">
             {this.state.data == null ? <div></div> : this.state.data.word}
