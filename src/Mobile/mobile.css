@@ -91,7 +91,7 @@
 }
 
 .word-heading-mobile {
-  display: block;
+  display: inline-block;
   font-weight: 600;
   font-size: 12vw;
   margin-bottom: 3%;
@@ -217,4 +217,22 @@
   padding-right: 4%;
   font-family: "EB Garamond", serif;
   transition: all 0.3s ease-in-out;
+}
+
+#internal-action-button-mobile {
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background-color: black;
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: right;
+}
+
+#internal-action-img-mobile {
+  width: 10%;
+  display: inline-block;
+  margin-right: 0;
+  margin-left: auto;
 }

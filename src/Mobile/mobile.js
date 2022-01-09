@@ -2,6 +2,8 @@ import "./mobile.css";
 import axios from "axios";
 import React from "react";
 import Loading from "./static/loading.gif";
+import Delete from "./static/minus.png";
+import Add from "./static/plus.png";
 export default class Mobile extends React.Component {
   state = {};
 
@@ -150,14 +152,16 @@ class FormMobile extends React.Component {
         window.alert(err);
       });
   };
-  AddWord = () => {
+  AddWord = (word) => {
     if (this.state.input.trim() === "") {
       return;
     }
     this.statusElement.current.toggleLoading();
     axios
       .post(
-        this.getBaseUrl(),
+        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
+          word +
+          "/",
         {},
         {
           headers: { Authorization: `Token ${this.props.data.token}` },
@@ -176,6 +180,28 @@ class FormMobile extends React.Component {
     this.setState({ input: word });
   };
 
+  DeleteWord = (word) => {
+    this.statusElement.current.toggleLoading();
+    axios
+      .post(
+        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
+          word +
+          "/",
+        { action: "delete" },
+        {
+          headers: { Authorization: `Token ${this.props.data.token}` },
+        }
+      )
+      .then((res) => {
+        const data_w = res.data;
+        this.props.handler();
+        this.statusElement.current.changeContent(data_w);
+      })
+      .catch((err) => {
+        window.alert(err);
+      });
+  };
+
   render() {
     return (
       <div>
@@ -191,12 +217,13 @@ class FormMobile extends React.Component {
             <button onClick={this.getMeaning} className="action-button-mobile">
               Get Meaning
             </button>
-            <button onClick={this.AddWord} className="action-button-mobile">
-              Add Word
-            </button>
           </div>
         </div>
-        <StatusMobile ref={this.statusElement} />
+        <StatusMobile
+          addword={this.AddWord}
+          delete={this.DeleteWord}
+          ref={this.statusElement}
+        />
       </div>
     );
   }
@@ -207,6 +234,8 @@ class StatusMobile extends React.Component {
     data: null,
     msgcode: 0,
     loading: false,
+    action: null,
+    actionFunction: null,
   };
 
   toggleLoading = () => {
@@ -215,17 +244,42 @@ class StatusMobile extends React.Component {
 
   changeContent = (data_w) => {
     this.toggleLoading();
+    data_w.isAdded
+      ? this.setState({
+          action: Delete,
+          actionFunction: this.delete,
+        })
+      : this.setState({
+          action: Add,
+          actionFunction: this.add,
+        });
     this.setState({
       data: data_w,
     });
   };
+  delete = () => {
+    if (this.state.data.word === null) return;
+    this.props.delete(this.state.data.word);
+  };
 
+  add = () => {
+    if (this.state.data.word === null) return;
+    this.props.addword(this.state.data.word);
+  };
   render() {
     return this.state.loading ? (
       <img id="loading-gif-mobile" alt="Loading.." src={Loading}></img>
     ) : this.state.data != null ? (
       this.state.data.Success == null ? (
         <div id="status-container">
+          <button id="internal-action-button-mobile" title="Delete this word">
+            <img
+              id="internal-action-img-mobile"
+              alt="Action"
+              onClick={this.state.actionFunction}
+              src={this.state.action}
+            ></img>
+          </button>
           <div className="word-heading-mobile">
             {this.state.data == null ? <div></div> : this.state.data.word}
           </div>
