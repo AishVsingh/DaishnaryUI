@@ -4,6 +4,8 @@ import React from "react";
 import Loading from "./static/loading.gif";
 import Delete from "./static/minus.png";
 import Add from "./static/plus.png";
+import Mic from "./static/mic.png";
+
 export default class Mobile extends React.Component {
   state = {};
 
@@ -266,6 +268,14 @@ class StatusMobile extends React.Component {
     if (this.state.data.word === null) return;
     this.props.addword(this.state.data.word);
   };
+  play_pronunciation = () => {
+    if (this.state.data.audio === null) {
+      return;
+    }
+
+    var audio = document.getElementById("audio-pronunciation");
+    audio.play();
+  };
   render() {
     return this.state.loading ? (
       <img id="loading-gif-mobile" alt="Loading.." src={Loading}></img>
@@ -281,6 +291,16 @@ class StatusMobile extends React.Component {
             ></img>
           </button>
           <div className="word-heading-mobile">
+            <button
+              id="play-pronunciation-mobile"
+              onClick={this.play_pronunciation}
+            >
+              <img id="mic-img-mobile" alt="Pronunciation" src={Mic}></img>
+              <audio
+                id="audio-pronunciation"
+                src={this.state.data.audio}
+              ></audio>
+            </button>
             {this.state.data == null ? <div></div> : this.state.data.word}
           </div>
           <div className="meaning-set">

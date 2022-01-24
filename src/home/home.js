@@ -4,6 +4,8 @@ import React from "react";
 import Loading from "./static/loading.gif";
 import Delete from "./static/minus.png";
 import Add from "./static/plus.png";
+import Mic from "./static/mic.png";
+
 export default class Home extends React.Component {
   state = {};
 
@@ -263,6 +265,15 @@ class Status extends React.Component {
     this.props.addword(this.state.data.word);
   };
 
+  play_pronunciation = () => {
+    if (this.state.data.audio === null) {
+      return;
+    }
+
+    var audio = document.getElementById("audio-pronunciation");
+    audio.play();
+  };
+
   render() {
     return this.state.loading ? (
       <img id="loading-gif" alt="Loading.." src={Loading}></img>
@@ -278,6 +289,14 @@ class Status extends React.Component {
             ></img>
           </button>
           <div className="word-heading">
+            <button id="play-pronunciation" onClick={this.play_pronunciation}>
+              <img id="mic-img" alt="Pronunciation" src={Mic}></img>
+              <audio
+                id="audio-pronunciation"
+                src={this.state.data.audio}
+              ></audio>
+            </button>
+
             {this.state.data == null ? <div></div> : this.state.data.word}
           </div>
           <div className="meaning-set">

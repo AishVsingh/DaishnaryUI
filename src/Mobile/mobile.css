@@ -221,6 +221,7 @@
 
 #internal-action-button-mobile {
   cursor: pointer;
+  user-select: none;
   padding: 0;
   border: none;
   background-color: black;
@@ -231,8 +232,31 @@
 }
 
 #internal-action-img-mobile {
+  user-select: none;
   width: 10%;
   display: inline-block;
   margin-right: 0;
   margin-left: auto;
+}
+
+#play-pronunciation-mobile {
+  user-select: none;
+  width: 10%;
+  cursor: pointer;
+  display: inline-block;
+  background-color: black;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  user-select: none;
+  border: 0;
+  padding: 0;
+  margin-right: 5%;
+  color: white;
+  line-height: 0;
+}
+#mic-img-mobile {
+  user-select: none;
+  width: 110%;
+  display: inline-block;
 }

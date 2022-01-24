@@ -193,7 +193,7 @@
   padding-right: 3%;
 }
 ::-webkit-scrollbar {
-  height: 3px;
+  height: 8px;
 }
 
 /* Track */
@@ -236,6 +236,7 @@
   cursor: pointer;
   padding: 0;
   border: none;
+  user-select: none;
   background-color: black;
   display: block;
   margin-left: auto;
@@ -244,7 +245,30 @@
 }
 #internal-action-img {
   width: 7%;
+  user-select: none;
   display: inline-block;
   margin-right: 0;
   margin-left: auto;
+}
+
+#play-pronunciation {
+  user-select: none;
+  width: 5%;
+  cursor: pointer;
+  display: inline-block;
+  background-color: black;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  user-select: none;
+  border: 0;
+  padding: 0;
+  padding-right: 2%;
+  color: white;
+  line-height: 0;
+}
+#mic-img {
+  user-select: none;
+  width: 115%;
+  display: inline-block;
 }
