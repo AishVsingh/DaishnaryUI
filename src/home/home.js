@@ -43,7 +43,7 @@ class MetaData extends React.Component {
     try {
       axios
         .get(
-          `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.user.username}/metadata/`,
+          `https://ec2-3-9-147-240.eu-west-2.compute.amazonaws.com:443/api/${this.props.user.username}/metadata/`,
           {
             headers: { Authorization: `Token ${this.props.user.token}` },
           }
@@ -130,7 +130,7 @@ class Form extends React.Component {
 
   getBaseUrl = () => {
     return (
-      `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
+      `https://ec2-3-9-147-240.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
       this.state.input.toLowerCase().trim() +
       "/"
     );
@@ -157,7 +157,7 @@ class Form extends React.Component {
     this.statusElement.current.toggleLoading();
     axios
       .post(
-        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
+        `https://ec2-3-9-147-240.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
           word +
           "/",
         {},
@@ -182,7 +182,7 @@ class Form extends React.Component {
     this.statusElement.current.toggleLoading();
     axios
       .post(
-        `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
+        `https://ec2-3-9-147-240.eu-west-2.compute.amazonaws.com:443/api/${this.props.data.username}/words/` +
           word +
           "/",
         { action: "delete" },

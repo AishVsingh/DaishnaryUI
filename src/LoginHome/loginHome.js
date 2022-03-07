@@ -33,7 +33,7 @@ class FormHome extends React.Component {
   };
 
   getBaseUrl = () => {
-    return `https://ec2-3-11-13-145.eu-west-2.compute.amazonaws.com:443/api/auth/`;
+    return `https://ec2-3-9-147-240.eu-west-2.compute.amazonaws.com:443/api/auth/`;
   };
 
   getCreds = () => {
