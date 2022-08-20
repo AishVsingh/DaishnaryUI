@@ -30,6 +30,7 @@ class FormHome extends React.Component {
   state = {
     status: "Welcome!",
     username: "",
+    shake: false
   };
 
   getBaseUrl = () => {
@@ -42,6 +43,11 @@ class FormHome extends React.Component {
       password: document.getElementById("password-login-input").value,
     };
   };
+
+  Shake = () => {
+    this.setState({ shake:!this.state.shake});
+    console.log(this.state.shake)
+  }
 
   setStatus = (msg) => {
     if (msg.trim() !== "") this.setState({ status: msg });
