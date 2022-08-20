@@ -174,9 +174,6 @@ class Form extends React.Component {
         window.alert(err);
       });
   };
-  setInput = (word) => {
-    this.setState({ input: word });
-  };
 
   DeleteWord = (word) => {
     this.statusElement.current.toggleLoading();
