@@ -30,7 +30,7 @@ class FormHome extends React.Component {
   state = {
     status: "Welcome!",
     username: "",
-    shake: false
+    shake: false,
   };
 
   getBaseUrl = () => {
@@ -45,9 +45,8 @@ class FormHome extends React.Component {
   };
 
   Shake = () => {
-    this.setState({ shake:!this.state.shake});
-    console.log(this.state.shake)
-  }
+    this.setState({ shake: !this.state.shake });
+  };
 
   setStatus = (msg) => {
     if (msg.trim() !== "") this.setState({ status: msg });
@@ -88,6 +87,8 @@ class FormHome extends React.Component {
                 this.setStatus("login Failed.\n\nUnknown error!");
                 break;
             }
+            this.Shake();
+            setTimeout(() => this.Shake(), 500);
           }
         });
     } catch (error) {}
@@ -97,7 +98,12 @@ class FormHome extends React.Component {
     return (
       <div>
         <div id="form-container">
-          <div id="login-status-box-home">{this.state.status}</div>
+          <div
+            class={this.state.shake ? "shake" : null}
+            id="login-status-box-home"
+          >
+            {this.state.status}
+          </div>
           <input
             type="text"
             id="username-login-input"
